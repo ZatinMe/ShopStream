@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: shopstream-postgres
+    environment:
+      POSTGRES_DB: shopstream
+      POSTGRES_USER: shopstream
+      POSTGRES_PASSWORD: shopstream123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shopstream-network
+
+  mongodb:
+    image: mongo:7
+    container_name: shopstream-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - shopstream-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: shopstream-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - shopstream-network
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: shopstream-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shopstream
+      SPRING_DATASOURCE_USERNAME: shopstream
+      SPRING_DATASOURCE_PASSWORD: shopstream123
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/shopstream
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks:
+      - shopstream-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: shopstream-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:8080
+    depends_on:
+      - backend
+    networks:
+      - shopstream-network
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
+
+networks:
+  shopstream-network:
+    driver: bridge

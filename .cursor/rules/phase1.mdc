@@ -1,0 +1,58 @@
+# Phase 1 - Core MVP Scope
+
+This phase focuses on bootstrapping the ShopStream backend with core CRUD flows and local infra setup. The goal is to establish a clean, working backend skeleton.
+
+---
+
+## Deliverables for Phase 1
+
+### 1. **Project Setup**
+- Monorepo or single Spring Boot project.
+- Docker Compose including:
+  - PostgreSQL
+  - MongoDB
+  - Redis
+  - Kafka (can be stubbed/empty for now)
+  - Elasticsearch (optional stub for now)
+- Common config files and connection setup for each DB/cache.
+
+### 2. **Auth & Users**
+- User registration and login.
+- Password hashing (e.g., BCrypt).
+- JWT-based authentication.
+- Redis session caching for logged-in users.
+
+### 3. **Products**
+- Product CRUD API using MongoDB.
+- Product fields: `id`, `title`, `description`, `price`, `images`, `createdAt`, `updatedAt`.
+- No search or Kafka events yet.
+
+### 4. **Orders**
+- Order CRUD API using Postgres.
+- Simple order model linking userId, productId, quantity, status, createdAt.
+
+---
+
+## Non-Goals for Phase 1
+- No Elasticsearch integration.
+- No Kafka publishing/consuming.
+- No async workers.
+- No vector embeddings or AI.
+
+---
+
+## Expectations for Cursor
+When generating code:
+- Use Spring Boot 3+, Java 17.
+- Use standard Spring Data JPA for Postgres.
+- Use Spring Data MongoDB for products.
+- Follow clean package structure (`controller`, `service`, `repository`, `model`).
+- Include basic unit tests where relevant.
+- Provide Docker Compose with working services, environment variables, and network.
+
+
+## Phase 1 UI Deliverables
+- React app with pages: Login/Register, Products CRUD, Orders CRUD.
+- Tailwind styling for a clean but minimal interface.
+- JWT-based auth flows integrated with backend APIs.
+- Axios service layer for API calls.
