@@ -7,7 +7,7 @@ spring:
   
   # PostgreSQL Configuration
   datasource:
-    url: jdbc:postgresql://localhost:5432/shopstream
+    url: jdbc:postgresql://postgres:5432/shopstream
     username: shopstream
     password: shopstream123
     driver-class-name: org.postgresql.Driver
@@ -25,11 +25,11 @@ spring:
   # MongoDB Configuration
   data:
     mongodb:
-      uri: mongodb://localhost:27017/shopstream
+      uri: mongodb://mongodb:27017/shopstream
   
   # Redis Configuration
   redis:
-    host: localhost
+    host: redis
     port: 6379
     password: 
     timeout: 2000ms
