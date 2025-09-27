@@ -1,2 +1,2 @@
 # ShopStream
-AI powered marketplace 
+AI powered marketplace - OG
