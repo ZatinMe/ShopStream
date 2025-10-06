@@ -2,73 +2,249 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom monochrome theme */
+/* Myntra Color Scheme */
 :root {
-  --primary-black: #000000;
-  --primary-white: #ffffff;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+  --myntra-purple: #282c3f;
+  --myntra-pink: #ff3f6c;
+  --myntra-white: #ffffff;
+  --myntra-gray-50: #f9fafb;
+  --myntra-gray-100: #f3f4f6;
+  --myntra-gray-200: #e5e7eb;
+  --myntra-gray-300: #d1d5db;
+  --myntra-gray-400: #9ca3af;
+  --myntra-gray-500: #6b7280;
+  --myntra-gray-600: #4b5563;
+  --myntra-gray-700: #374151;
+  --myntra-gray-800: #1f2937;
+  --myntra-gray-900: #111827;
+  --myntra-red: #ff3f6c;
+  --myntra-green: #00a651;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Whitney', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--primary-white);
-  color: var(--primary-black);
+  background-color: var(--myntra-white);
+  color: var(--myntra-gray-900);
+  line-height: 1.5;
 }
 
-/* Custom focus styles for monochrome theme */
-.focus-ring:focus {
+/* Myntra Header Styles */
+.myntra-header {
+  background-color: var(--myntra-purple);
+  color: var(--myntra-white);
+}
+
+.myntra-logo {
+  background: linear-gradient(45deg, var(--myntra-pink), #ff6b9d);
+  color: var(--myntra-white);
+  font-weight: 700;
+  border-radius: 2px;
+}
+
+.myntra-search {
+  background-color: var(--myntra-white);
+  border: 1px solid var(--myntra-gray-300);
+  color: var(--myntra-gray-900);
+}
+
+.myntra-search::placeholder {
+  color: var(--myntra-gray-500);
+}
+
+/* Myntra Product Card Styles */
+.myntra-product-card {
+  background: var(--myntra-white);
+  border: 1px solid var(--myntra-gray-200);
+  transition: all 0.3s ease;
+}
+
+.myntra-product-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.myntra-rating {
+  background-color: var(--myntra-gray-800);
+  color: var(--myntra-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.myntra-price-current {
+  color: var(--myntra-gray-900);
+  font-weight: 700;
+}
+
+.myntra-price-original {
+  color: var(--myntra-gray-500);
+  text-decoration: line-through;
+}
+
+.myntra-discount {
+  color: var(--myntra-red);
+  font-weight: 600;
+}
+
+/* Myntra Filter Sidebar */
+.myntra-filter-sidebar {
+  background: var(--myntra-white);
+  border-right: 1px solid var(--myntra-gray-200);
+}
+
+.myntra-filter-section {
+  border-bottom: 1px solid var(--myntra-gray-200);
+  padding: 1rem 0;
+}
+
+.myntra-filter-title {
+  color: var(--myntra-gray-900);
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.myntra-filter-item {
+  color: var(--myntra-gray-700);
+  font-size: 0.875rem;
+  padding: 0.25rem 0;
+}
+
+.myntra-filter-count {
+  color: var(--myntra-gray-500);
+  font-size: 0.75rem;
+}
+
+/* Myntra Price Slider */
+.myntra-price-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--myntra-gray-300);
   outline: none;
-  ring: 2px;
-  ring-color: var(--primary-black);
-  border-color: transparent;
+  border-radius: 2px;
+}
+
+.myntra-price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--myntra-pink);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.myntra-price-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--myntra-pink);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Myntra Color Swatches */
+.myntra-color-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--myntra-gray-300);
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+/* Myntra Navigation */
+.myntra-nav-link {
+  color: var(--myntra-white);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.myntra-nav-link:hover {
+  color: var(--myntra-pink);
+}
+
+/* Myntra Buttons */
+.myntra-btn-primary {
+  background-color: var(--myntra-pink);
+  color: var(--myntra-white);
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.myntra-btn-primary:hover {
+  background-color: #e63946;
+}
+
+.myntra-btn-secondary {
+  background-color: var(--myntra-white);
+  color: var(--myntra-gray-700);
+  border: 1px solid var(--myntra-gray-300);
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.myntra-btn-secondary:hover {
+  background-color: var(--myntra-gray-50);
+  border-color: var(--myntra-gray-400);
+}
+
+/* Myntra Typography */
+.myntra-heading {
+  color: var(--myntra-gray-900);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.myntra-text {
+  color: var(--myntra-gray-700);
+  line-height: 1.5;
+}
+
+.myntra-text-muted {
+  color: var(--myntra-gray-500);
+  font-size: 0.875rem;
+}
+
+/* Myntra Grid Layout */
+.myntra-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+@media (min-width: 640px) {
+  .myntra-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .myntra-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+
+/* Myntra Responsive Design */
+@media (max-width: 768px) {
+  .myntra-mobile-hidden {
+    display: none;
+  }
 }
 
 /* Smooth transitions */
 * {
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-}
-
-/* Custom button styles */
-.btn-primary {
-  @apply bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black;
-}
-
-.btn-secondary {
-  @apply bg-gray-200 text-black hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400;
-}
-
-/* Custom input styles */
-.input-primary {
-  @apply border-gray-300 focus:ring-black focus:border-transparent bg-white text-black;
-}
-
-/* Card styles */
-.card {
-  @apply bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow;
-}
-
-/* Typography */
-.text-primary {
-  color: var(--primary-black);
-}
-
-.text-secondary {
-  color: var(--gray-600);
-}
-
-.text-muted {
-  color: var(--gray-500);
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }

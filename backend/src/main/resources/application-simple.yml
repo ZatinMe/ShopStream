@@ -45,24 +45,10 @@ spring:
     connection-timeout: 10s
     socket-timeout: 30s
 
-  # Kafka Configuration - Temporarily disabled for startup
-  # kafka:
-  #   bootstrap-servers: kafka:29092
-  #   producer:
-  #     key-serializer: org.apache.kafka.common.serialization.StringSerializer
-  #     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-  #     acks: all
-  #     retries: 3
-  #     batch-size: 16384
-  #     linger-ms: 5
-  #     buffer-memory: 33554432
-  #   consumer:
-  #     group-id: shopstream-group
-  #     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  #     value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-  #     auto-offset-reset: earliest
-  #     enable-auto-commit: true
-  #     auto-commit-interval-ms: 1000
+  # Disable Kafka auto-configuration
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
 
 # JWT Configuration
 jwt:

@@ -124,27 +124,52 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      {/* Hero Section */}
-      <div className="bg-white border-b border-gray-200 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">ShopStream</h1>
-            <p className="text-lg text-gray-600 mb-8">Discover Amazing Products</p>
+    <div className="min-h-screen bg-white">
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+          <div className="text-sm text-gray-500">
+            <span>Home</span> / <span>Clothing</span> / <span className="font-semibold text-gray-900">Men T-Shirts</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Page Title and Filters Bar */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="myntra-heading text-2xl">Men T-Shirts</h1>
+              <p className="myntra-text-muted">{filteredProducts.length} items</p>
+            </div>
             
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search for products..."
-                  className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white text-gray-900 placeholder-gray-500"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-500 text-white px-6 py-2 rounded-md font-semibold hover:bg-red-600 transition-colors">
-                  Search
-                </button>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm font-semibold text-gray-700">FILTERS</span>
+                <div className="flex space-x-4">
+                  <select className="text-sm border-none bg-transparent focus:outline-none">
+                    <option>Bundles</option>
+                  </select>
+                  <select className="text-sm border-none bg-transparent focus:outline-none">
+                    <option>Country of Origin</option>
+                  </select>
+                  <select className="text-sm border-none bg-transparent focus:outline-none">
+                    <option>Size</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">Sort by:</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="text-sm border-none bg-transparent focus:outline-none font-semibold"
+                >
+                  <option value="name">Recommended</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="newest">Newest First</option>
+                </select>
               </div>
             </div>
           </div>
@@ -152,89 +177,168 @@ const Products = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters and Controls */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 space-y-4 lg:space-y-0">
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-            {/* Category Filter */}
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
-              <option value="">All Categories</option>
-              {getCategories().map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
-
-            {/* Sort By */}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
-              <option value="name">Sort by Name</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="newest">Newest First</option>
-            </select>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <div className="text-gray-600">
-              {filteredProducts.length} products found
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex gap-6">
+          {/* Filters Sidebar */}
+          <div className="myntra-filter-sidebar w-64 myntra-mobile-hidden">
+            {/* Categories */}
+            <div className="myntra-filter-section">
+              <h3 className="myntra-filter-title mb-3">CATEGORIES</h3>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <span>Tshirts ({products.filter(p => p.category === 'Tshirts').length})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <span>Polo Tshirts ({products.filter(p => p.category === 'Polo').length})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <span>Oversized Tshirts ({products.filter(p => p.category === 'Oversized').length})</span>
+                </label>
+              </div>
             </div>
-            {isSeller && (
-              <button
-                onClick={() => setShowAdminPanel(true)}
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center space-x-2"
-              >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+
+            {/* Brand */}
+            <div className="myntra-filter-section">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="myntra-filter-title">BRAND</h3>
+                <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <span>Add Product</span>
-              </button>
+              </div>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <span>WOOSTRO ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <span>Genzy ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <span>Roadster ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+                <button className="text-blue-600 text-sm font-medium">+ 1368 more</button>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="myntra-filter-section">
+              <h3 className="myntra-filter-title mb-3">PRICE</h3>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-600">₹0</span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="10000"
+                    className="myntra-price-slider flex-1"
+                  />
+                  <span className="text-sm text-gray-600">₹10,000+</span>
+                </div>
+                <div className="flex space-x-2">
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    className="w-20 px-2 py-1 text-sm border border-gray-300 rounded"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    className="w-20 px-2 py-1 text-sm border border-gray-300 rounded"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Color */}
+            <div className="myntra-filter-section">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="myntra-filter-title">COLOR</h3>
+                <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <div className="myntra-color-swatch bg-black"></div>
+                  <span>Black ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <div className="myntra-color-swatch bg-blue-500"></div>
+                  <span>Blue ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <div className="myntra-color-swatch bg-red-500"></div>
+                  <span>Red ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+                <label className="flex items-center space-x-2 myntra-filter-item">
+                  <input type="checkbox" className="rounded" />
+                  <div className="myntra-color-swatch bg-green-500"></div>
+                  <span>Green ({Math.floor(Math.random() * 1000) + 100})</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Products Grid */}
+          <div className="flex-1">
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                {error}
+              </div>
             )}
-          </div>
-        </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        )}
+            {/* Products Grid */}
+            <div className="myntra-grid">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  isSeller={isSeller}
+                />
+              ))}
+            </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              isSeller={isSeller}
-            />
-          ))}
-        </div>
+            {/* Empty State */}
+            {filteredProducts.length === 0 && !loading && (
+              <div className="text-center py-16">
+                <div className="text-6xl text-gray-300 mb-4">🔍</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+                <p className="text-gray-500 mb-6">Try adjusting your search or filter criteria</p>
+                {isSeller && (
+                  <button
+                    onClick={() => setShowAdminPanel(true)}
+                    className="myntra-btn-primary"
+                  >
+                    Add Your First Product
+                  </button>
+                )}
+              </div>
+            )}
 
-        {/* Empty State */}
-        {filteredProducts.length === 0 && !loading && (
-          <div className="text-center py-16">
-            <div className="text-6xl text-gray-300 mb-4">🔍</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
-            <p className="text-gray-500 mb-6">Try adjusting your search or filter criteria</p>
+            {/* Add Product Button for Sellers */}
             {isSeller && (
-              <button
-                onClick={() => setShowAdminPanel(true)}
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-              >
-                Add Your First Product
-              </button>
+              <div className="mt-8 text-center">
+                <button
+                  onClick={() => setShowAdminPanel(true)}
+                  className="myntra-btn-primary"
+                >
+                  Add Product
+                </button>
+              </div>
             )}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Admin Panel */}
