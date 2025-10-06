@@ -1,5 +1,5 @@
-# ShopStream Marketplace
 
+# ShopStream Marketplace
 AI-powered marketplace with React frontend and Spring Boot backend.
 
 ## Phase 1 Features
@@ -161,3 +161,6 @@ docker-compose -f docker-compose.yml up --build
 - Phase 2: AI-powered recommendations
 - Phase 3: Advanced analytics
 - Phase 4: Microservices architecture
+
+
+
