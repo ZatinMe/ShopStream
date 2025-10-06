@@ -1,3 +1,74 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom monochrome theme */
+:root {
+  --primary-black: #000000;
+  --primary-white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
+}
+
+/* Custom focus styles for monochrome theme */
+.focus-ring:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--primary-black);
+  border-color: transparent;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Custom button styles */
+.btn-primary {
+  @apply bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-black hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400;
+}
+
+/* Custom input styles */
+.input-primary {
+  @apply border-gray-300 focus:ring-black focus:border-transparent bg-white text-black;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow;
+}
+
+/* Typography */
+.text-primary {
+  color: var(--primary-black);
+}
+
+.text-secondary {
+  color: var(--gray-600);
+}
+
+.text-muted {
+  color: var(--gray-500);
+}

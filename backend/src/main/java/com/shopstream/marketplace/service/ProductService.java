@@ -1,21 +1,34 @@
 package com.shopstream.marketplace.service;
 
+import com.shopstream.marketplace.event.ProductEvent;
 import com.shopstream.marketplace.model.Product;
 import com.shopstream.marketplace.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductService {
     
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+    private static final String PRODUCT_EVENTS_TOPIC = "product-events";
+    
     @Autowired
     private ProductRepository productRepository;
     
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+    
     public Product createProduct(Product product) {
-        return productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
+        publishProductEvent("PRODUCT_CREATED", savedProduct);
+        return savedProduct;
     }
     
     public Optional<Product> getProductById(String id) {
@@ -47,14 +60,18 @@ public class ProductService {
     }
     
     public Product updateProduct(Product product) {
-        return productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
+        publishProductEvent("PRODUCT_UPDATED", savedProduct);
+        return savedProduct;
     }
     
     public void deleteProduct(String id) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
-            product.get().setIsActive(false);
-            productRepository.save(product.get());
+            Product productToDelete = product.get();
+            productToDelete.setIsActive(false);
+            Product savedProduct = productRepository.save(productToDelete);
+            publishProductEvent("PRODUCT_DELETED", savedProduct);
         }
     }
     
@@ -63,6 +80,34 @@ public class ProductService {
         if (product.isPresent()) {
             product.get().setStock(newStock);
             productRepository.save(product.get());
+        }
+    }
+    
+    /**
+     * Publish product events to Kafka topic.
+     */
+    private void publishProductEvent(String eventType, Product product) {
+        try {
+            ProductEvent event = new ProductEvent(
+                eventType,
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getUpdatedAt() != null ? product.getUpdatedAt().atZone(java.time.ZoneOffset.UTC).toInstant() : Instant.now()
+            );
+            
+            kafkaTemplate.send(PRODUCT_EVENTS_TOPIC, product.getId(), event)
+                .whenComplete((result, ex) -> {
+                    if (ex == null) {
+                        logger.info("Successfully published {} event for product {} with offset {}", 
+                            eventType, product.getId(), result.getRecordMetadata().offset());
+                    } else {
+                        logger.error("Failed to publish {} event for product {}: {}", 
+                            eventType, product.getId(), ex.getMessage());
+                    }
+                });
+        } catch (Exception e) {
+            logger.error("Error publishing {} event for product {}: {}", eventType, product.getId(), e.getMessage());
         }
     }
 }

@@ -45,7 +45,7 @@
 ## Non-Goals for Phase 1
 - No complex search (ES not yet integrated).
 - No Kafka/AI features visible in UI.
-- No fancy dashboards.
+
 
 ---
 

@@ -1,0 +1,36 @@
+## 📄 `events.mdc`
+This acts as a *shared reference* for all event definitions (Cursor will stick to it):
+
+```md
+# ShopStream Events - Reference
+
+## Common Event Structure
+Every event must follow:
+```json
+{
+  "eventType": "<string>",
+  "timestamp": "<ISO8601 UTC>",
+  "payload": { ...domain fields... }
+}
+
+Product Events
+    PRODUCT_CREATED
+    PRODUCT_UPDATED
+    PRODUCT_DELETED
+
+    {
+    "productId": "string",
+    "title": "string",
+    "price": "number",
+    "updatedAt": "ISO8601"
+    }
+
+ORDER_CREATED
+    {
+        "orderId": "string",
+        "userId": "string",
+        "productId": "string",
+        "quantity": "number",
+        "createdAt": "ISO8601"
+    }
+

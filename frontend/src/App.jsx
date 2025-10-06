@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { CartProvider } from './contexts/CartContext';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -26,17 +27,19 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Navbar user={user} setUser={setUser} />
-        <Routes>
-          <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/" />} />
-          <Route path="/register" element={!user ? <Register setUser={setUser} /> : <Navigate to="/" />} />
-          <Route path="/" element={user ? <Products /> : <Navigate to="/login" />} />
-          <Route path="/orders" element={user ? <Orders /> : <Navigate to="/login" />} />
-        </Routes>
-      </div>
-    </Router>
+    <CartProvider>
+      <Router>
+        <div className="min-h-screen bg-white">
+          <Navbar user={user} setUser={setUser} />
+          <Routes>
+            <Route path="/login" element={!user ? <Login setUser={setUser} /> : <Navigate to="/" />} />
+            <Route path="/register" element={!user ? <Register setUser={setUser} /> : <Navigate to="/" />} />
+            <Route path="/" element={<Products />} />
+            <Route path="/orders" element={user ? <Orders /> : <Navigate to="/login" />} />
+          </Routes>
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 

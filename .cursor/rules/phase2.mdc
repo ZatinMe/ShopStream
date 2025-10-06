@@ -1,0 +1,49 @@
+---
+alwaysApply: false
+---
+# Phase 2 - Events & Kafka
+
+## Goals
+- Introduce Kafka as the backbone for event-driven architecture.
+- Ensure that both product and order services can publish domain events.
+- Provide consumers that log and later fan-out to other systems.
+
+---
+
+## Deliverables for Phase 2
+1. **Infra**
+   - Docker Compose extended with Kafka + Zookeeper (or Redpanda).
+   - Spring Boot `spring-kafka` configuration.
+
+2. **Product Events**
+   - On product create/update/delete, publish an event to `product-events` Kafka topic.
+   - Payload: `{ eventType, productId, title, price, updatedAt }`.
+
+3. **Order Events**
+   - On order create, publish an event to `order-events` Kafka topic.
+   - Use outbox pattern in Postgres (store event in DB → background relay to Kafka).
+   - Payload: `{ eventType, orderId, userId, productId, quantity, createdAt }`.
+
+4. **Consumers**
+   - A simple consumer module/service that subscribes to both topics and logs incoming events.
+
+---
+
+## Non-Goals for Phase 2
+- No Elasticsearch indexing yet.
+- No AI workers.
+- No schema registry (JSON only for now).
+- No retries/advanced DLQs.
+
+---
+
+## Expectations for Cursor
+- Use Spring Boot `spring-kafka` library.
+- Keep events as JSON with a common structure:
+  ```json
+  {
+    "eventType": "PRODUCT_CREATED",
+    "timestamp": "2025-09-28T10:00:00Z",
+    "payload": { ... }
+  }
+   
