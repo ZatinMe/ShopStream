@@ -18,20 +18,20 @@ public class EventConsumerService {
     /**
      * Consumer for product events.
      */
-    // @KafkaListener(topics = "product-events", groupId = "shopstream-group")
+    @KafkaListener(topics = "product-events", groupId = "shopstream-group")
     public void consumeProductEvent(ProductEvent productEvent) {
-        logger.info("Received Product Event: {} - Product ID: {}, Title: {}, Price: {}, Updated At: {}", 
+        logger.info("Received Product Event: {} - Product ID: {}, Name: {}, Price: {}, Timestamp: {}", 
             productEvent.getEventType(), 
             productEvent.getProductId(), 
-            productEvent.getTitle(), 
+            productEvent.getProductName(), 
             productEvent.getPrice(), 
-            productEvent.getUpdatedAt());
+            productEvent.getTimestamp());
     }
     
     /**
      * Consumer for order events.
      */
-    // @KafkaListener(topics = "order-events", groupId = "shopstream-group")
+    @KafkaListener(topics = "order-events", groupId = "shopstream-group")
     public void consumeOrderEvent(OrderEvent orderEvent) {
         logger.info("Received Order Event: {} - Order ID: {}, User ID: {}, Product ID: {}, Quantity: {}, Created At: {}", 
             orderEvent.getEventType(), 

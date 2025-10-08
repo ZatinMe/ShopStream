@@ -31,8 +31,8 @@ public class ProductService {
         return savedProduct;
     }
     
-    public Optional<Product> getProductById(String id) {
-        return productRepository.findByIdAndIsActiveTrue(id);
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findByIdAndIsActiveTrue(id.toString());
     }
     
     public List<Product> getAllProducts() {
@@ -92,8 +92,11 @@ public class ProductService {
                 eventType,
                 product.getId(),
                 product.getName(),
-                product.getPrice(),
-                product.getUpdatedAt() != null ? product.getUpdatedAt().atZone(java.time.ZoneOffset.UTC).toInstant() : Instant.now()
+                product.getDescription(),
+                product.getPrice().doubleValue(),
+                product.getCategory(),
+                product.getTags() != null ? String.join(",", product.getTags()) : "",
+                product.getSellerId() != null ? product.getSellerId().toString() : "unknown"
             );
             
             kafkaTemplate.send(PRODUCT_EVENTS_TOPIC, product.getId(), event)

@@ -43,7 +43,7 @@ public class KafkaTestService {
     /**
      * Consumer for test messages to validate Kafka consumer setup.
      */
-    // @KafkaListener(topics = TEST_TOPIC, groupId = "test-group")
+    @KafkaListener(topics = TEST_TOPIC, groupId = "test-group")
     public void consumeTestMessage(String message) {
         logger.info("Received test message: {}", message);
     }
