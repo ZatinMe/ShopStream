@@ -1,0 +1,51 @@
+# Phase 3 - Search & Caching
+
+## Objective
+Integrate Elasticsearch and Redis caching/rate-limiting into ShopStream backend.
+Enable indexed product search powered by BM25 with caching.
+
+---
+
+## Deliverables
+1. Elasticsearch infra + config.
+2. Kafka consumer to index products.
+3. Search API using ES (BM25).
+4. Redis caching layer for search results.
+5. Redis rate limiter middleware.
+
+---
+
+## Expected Behavior
+- Product events from Kafka trigger ES index/update/delete.
+- `/api/search` queries ES; results cached in Redis for 30s.
+- Cache invalidation occurs on product update events.
+- Rate limiter applies per-IP or per-user.
+- All code to be modular and unit-testable.
+
+---
+
+## Non-Goals
+- No AI embeddings yet (Phase 4).
+- No analytics dashboards.
+- No schema registry or advanced retries.
+
+---
+
+## Cursor Work Discipline
+**STRICT RULE:**  
+Cursor must complete ONE CHUNK ONLY at a time.  
+Each chunk (Chunk 1–5) must end with a verifiable output (Docker service, ES connection, or working endpoint).  
+After completion, wait for human confirmation before moving to next chunk.
+
+Cursor must NOT implement hybrid or AI features until explicitly instructed.
+
+---
+
+## Tools and Stack
+- Spring Boot 3+
+- Spring Data Elasticsearch
+- Redis (via `spring-data-redis`)
+- Kafka for event sourcing
+- Docker Compose for infra
+
+

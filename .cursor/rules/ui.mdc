@@ -1,0 +1,57 @@
+# ShopStream UI Guidelines
+
+## Goals
+- Provide a simple, lightweight React UI for interacting with the ShopStream backend.
+- Focus on functionality and developer productivity, not heavy design polish.
+- Must align with the backend architecture defined in `project.mdc`.
+
+---
+
+## Tech Stack
+- React 18 (Vite or CRA)
+- Tailwind CSS for quick styling
+- Axios (or Fetch) for API calls
+- React Router for navigation
+- Basic form validation with React Hook Form or simple controlled inputs
+
+---
+
+## UI Pages / Features for Phase 1
+1. **Login / Register**
+   - Forms to register and log in users.
+   - Token stored in localStorage.
+   - Show logged-in username in navbar.
+
+2. **Product Management**
+   - Form to add product (title, description, price, image URL).
+   - List of products with basic details.
+   - Edit/Delete buttons.
+
+3. **Orders**
+   - Place order for a product (quantity).
+   - List current user’s orders.
+
+---
+
+## UI Principles
+- Keep UI minimal and clear, no complex components.
+- Use Tailwind for layout, forms, and buttons.
+- API URLs configurable via `.env`.
+- JWT token attached in Axios headers after login.
+- Minimal error handling with toasts/alerts.
+
+---
+
+## Non-Goals for Phase 1
+- No complex search (ES not yet integrated).
+- No Kafka/AI features visible in UI.
+
+
+---
+
+## Expectations for Cursor
+When asked to scaffold UI:
+- Generate a Vite + React + Tailwind project.
+- Include routing (Login, Products, Orders).
+- Add API service layer with Axios.
+- Keep components small and functional.

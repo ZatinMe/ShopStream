@@ -1,0 +1,94 @@
+# Project: ShopStream Marketplace
+
+## One-liner
+ShopStream is a small online marketplace where sellers post items and buyers search for them. The project is designed to practice key backend technologies like Kafka, Redis, Postgres, MongoDB, Elasticsearch, async processing, and caching.
+
+---
+
+## Overall Architecture
+- **Frontend:** (Not focus right now)
+- **API Gateway / BFF:** A single Spring Boot app for Phase 1, may split into services later.
+- **Auth & Users:** PostgreSQL for persistent storage, Redis for session caching.
+- **Products:** Stored in MongoDB. Product create/update/price change events are published to Kafka.
+- **Orders:** Stored in PostgreSQL. Uses outbox pattern to publish events to Kafka.
+- **Search:** Elasticsearch with hybrid lexical (BM25) + semantic (vector) search.
+- **Caching:** Redis for session cache, search result cache (30s), and rate limiting.
+- **Async AI Worker:** Python-based worker for image moderation, tag generation, and embedding creation (later phase).
+
+---
+
+## Data Stores
+- **Postgres:** For users, orders, authentication.
+- **MongoDB:** For product documents (e.g., name, description, attributes).
+- **Redis:** For caching and rate limiting.
+- **Elasticsearch:** For product search indexing and retrieval.
+- **Kafka:** Event bus connecting services.
+
+---
+
+## Key Features
+1. **User Authentication**
+   - JWT-based authentication (Phase 1)
+   - Session caching in Redis
+2. **Product Management**
+   - CRUD for product documents in MongoDB
+   - Publish product change events to Kafka
+3. **Order Management**
+   - Orders stored in Postgres
+   - Outbox pattern to Kafka
+4. **Search**
+   - Elasticsearch indexing on product events
+   - Hybrid BM25 + vector search (Phase 3+)
+5. **AI Worker**
+   - Async enrichment for product images/text (Phase 4)
+6. **Caching & Rate Limiting**
+   - Redis session caching, result caching, and simple IP-based rate limits.
+
+---
+
+## Tech Stack
+- **Backend:** Java 17, Spring Boot 3+
+- **DB:** PostgreSQL (Neon / Supabase for dev), MongoDB Atlas (free tier)
+- **Cache:** Redis (Upstash free)
+- **Search:** Elasticsearch 8+ (Elastic Cloud free)
+- **Queue:** Kafka (Upstash free / local)
+- **Async Worker:** Python (FastAPI/Celery) — later
+- **Infra:** Docker Compose for local orchestration
+
+---
+
+## Non-Goals for MVP
+- No payments
+- No analytics dashboards
+- No complex frontend
+
+---
+
+## High-Level System Design
+Clients ──> API Gateway
+├──> Auth & Users (Postgres+Redis)
+├──> Products (Mongo) ──> Kafka ──> Search (ES) & AI Workers
+└──> Orders (Postgres+Kafka Outbox)
+
+
+---
+
+## Project Phases
+**Phase 1 (MVP Core):**
+- Auth & Users CRUD (Postgres + Redis session)
+- Product CRUD (Mongo)
+- Order CRUD (Postgres)
+- Docker Compose setup for Postgres, Mongo, Redis, Kafka, Elasticsearch
+- No search, AI, or events yet
+
+**Phase 2:** Kafka events, outbox pattern  
+**Phase 3:** Elasticsearch search, caching, rate limiting  
+**Phase 4:** AI enrichment worker
+
+---
+
+## Guiding Principles
+- Keep code modular to enable easy service extraction later.
+- Favor clean domain-driven design structure in Spring Boot.
+- Write production-quality Docker Compose for local dev.
+- Prioritize clarity and interview-readiness over UI polish.

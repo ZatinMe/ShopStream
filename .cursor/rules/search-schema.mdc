@@ -1,0 +1,25 @@
+# ShopStream Elasticsearch Schema Reference
+
+## Index Name
+`products_index_v1`
+
+## Mapping
+```json
+{
+  "mappings": {
+    "properties": {
+      "id": { "type": "keyword" },
+      "title": { "type": "text" },
+      "description": { "type": "text" },
+      "price": { "type": "double" },
+      "tags": { "type": "keyword" },
+      "updatedAt": { "type": "date" },
+      "embedding": {
+        "type": "dense_vector",
+        "dims": 384,
+        "index": true,
+        "similarity": "cosine"
+      }
+    }
+  }
+}
